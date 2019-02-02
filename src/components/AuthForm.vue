@@ -1,14 +1,14 @@
 <template>
-  <form 
-    data-test="auth-form" 
+  <form
+    data-test="auth-form"
     @submit.prevent="emitSubmit"
   >
     <form-field>
       <message data-test="form-message">Log in to your Endpass account to access site actions</message>
     </form-field>
     <form-field v-if="error">
-      <message 
-        :error="true" 
+      <message
+        :error="true"
         data-test="error-message"
       >{{ error }}</message>
     </form-field>
@@ -30,17 +30,21 @@
         type="primary"
         data-test="submit-button"
       >{{ primaryButtonLabel }}</v-button>
-      <v-button 
+      <v-button
         :disabled="!closable || loading"
-        data-test="cancel-button" 
+        data-test="cancel-button"
         @click="emitCancel"
       >Close</v-button>
+    </form-controls>
+    <form-controls>
+      <git-auth-button></git-auth-button>
     </form-controls>
   </form>
 </template>
 
 <script>
 import VFrame from './VFrame.vue';
+import GitAuthButton from './GitAuthButton.vue';
 import VInput from './VInput.vue';
 import VButton from './VButton.vue';
 import Message from './Message.vue';
@@ -103,6 +107,7 @@ export default {
     VButton,
     VInput,
     Message,
+    GitAuthButton,
     FormField,
     FormControls,
   },

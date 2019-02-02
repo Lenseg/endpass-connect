@@ -51,6 +51,19 @@ export const auth = (email, redirectUrl) => {
     });
 };
 
+export const authWithGitHub = code => {
+  return request
+    .get(
+      `${identityBaseUrl}/api/v1.1/auth/github?code=${encodeURIComponent(
+        code,
+      )}`,
+    )
+    .then(res => {
+      if (!res.success) throw new Error(res.message);
+      return res;
+    });
+};
+
 export const otpAuth = (email, code) =>
   request
     .post(`${identityBaseUrl}/api/v1.1/auth/token`, {

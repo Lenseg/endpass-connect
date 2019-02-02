@@ -5,6 +5,7 @@ import store from '@/store';
 
 import Bridge from '@/components/Bridge';
 import Auth from '@/components/screens/Auth';
+import AuthGit from '@/components/screens/AuthGit';
 import Sign from '@/components/screens/Sign';
 import User from '@/components/screens/User';
 
@@ -28,6 +29,14 @@ const router = new Router({
       component: Auth,
     },
     {
+      path: '/git',
+      name: 'AuthGitScreen',
+      component: AuthGit,
+      beforeEnter: (to, from, next) => {
+        return typeof to.query.code !== 'undefined' ? next() : next('auth');
+      },
+    },
+    {
       path: '/sign',
       name: 'SignScreen',
       component: Sign,
@@ -36,7 +45,9 @@ const router = new Router({
 });
 
 router.beforeEach(async (to, from, next) => {
-  const isPublicRoute = ['AuthScreen', 'Bridge'].includes(to.name);
+  const isPublicRoute = ['AuthScreen', 'Bridge', 'AuthGitScreen'].includes(
+    to.name,
+  );
 
   if (!isPublicRoute) {
     await store.dispatch('getAccounts');
